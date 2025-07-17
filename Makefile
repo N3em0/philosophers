@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/07/16 17:30:10 by egache           ###   ########.fr        #
+#    Updated: 2025/07/17 19:00:03 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,17 @@
 
 HEADER := include/philosophers.h
 
-HEAD		:=				\
-include						\
+HEAD		:=	\
+include	\
 
 NAME	:=	philo
 
 SRC_DIR	:=	src
-SRC		:=					\
-philosophers.c 				\
-tfbil.c						\
+SRC		:=	\
+philosophers.c	\
+tfbil.c	\
+debug.c	\
+init_philo.c \
 
 SRC		:=	$(SRC:%=$(SRC_DIR)/%)
 
@@ -38,7 +40,7 @@ DEP		:=	$(OBJ:%.o=.d)
 #AR	:=	ar -rcs
 
 CC		:=	cc
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra -Werror -g3
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 # LIBDIR	:=	$(addprefix -L,$(dir $(LIBS_TARGET)))
 # LIBNAME	:=	$(addprefix -l,$(LIBS))
