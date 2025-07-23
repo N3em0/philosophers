@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/07/17 19:00:03 by egache           ###   ########.fr        #
+#    Updated: 2025/07/23 23:10:33 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_DIR	:=	src
 SRC		:=	\
 philosophers.c	\
 tfbil.c	\
+initialisation.c \
 debug.c	\
 init_philo.c \
 

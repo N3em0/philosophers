@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
+/*   Updated: 2025/07/23 23:53:11 by egache           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philosophers.h"
+
+int ft_initialisation(t_monitor **monitor, t_philo **philo)
+{
+		init_philo(monitor, philo);
+		init_mutex(*monitor);
+		init_thread(philo);
+		return (0);
+}
+
+int	init_philo(t_monitor **monitor, t_philo **philo)
+{
+	int		i;
+	t_philo	*new;
+
+	i = 0;
+	*philo = NULL;
+	while (i < (*monitor)->philo_count)
+	{
+		new = create_philo(i);
+		if (!new)
+			return (1);
+		new->monitor = (*monitor);
+		add_philo_back(philo, new);
+		i++;
+	}
+	return (0);
+}
+
+int init_mutex(t_monitor *monitor)
+{
+	pthread_mutex_init(&monitor->writing, NULL);
+	pthread_mutex_init(&monitor->start, NULL);
+	pthread_mutex_init(&monitor->forks, NULL);
+	pthread_mutex_init (&monitor->last_meal, NULL);
+	return (0);
+}
+
+int	init_thread(t_philo **philo)
+{
+	t_philo	*current;
+
+	current = *philo;
+	while (current->next != NULL && current->next != *philo)
+	{
+		pthread_create(&current->thread, NULL, philo_routine,
+			current);
+		pthread_join(current->thread, NULL);
+		current = current->next;
+	}
+	pthread_create(&current->thread, NULL, philo_routine, current);
+	pthread_join(current->thread, NULL);
+	return (0);
+}

@@ -6,51 +6,50 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/07/23 19:29:52 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/24 00:02:08 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+/*
+1 millisecond = 1000 microseconds
+
+time in arguments are in milliseconds. So 400ms = 400 x 1000
+*/
+
+long timetime(t_monitor *monitor)
+{
+	long set_time;
+	gettimeofday(&monitor->tv, NULL);
+	set_time = (monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000);
+	return (set_time);
+}
+
 
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)(arg);
-	//pthread_mutex_lock(&philo->monitor->start);
-	//pthread_mutex_unlock(&philo->monitor->start);
+	pthread_mutex_lock(&philo->monitor->last_meal);
+	philo->last_meal = timetime(philo->monitor);
+	printf("last_meal de philo %d : %ld\n", philo->fork_id, philo->last_meal);
+	pthread_mutex_unlock(&philo->monitor->last_meal);
+	pthread_mutex_lock(&philo->monitor->forks);
 	pthread_mutex_lock(&philo->monitor->writing);
-	printf("salut je suis le philo %d\n", philo->fork_id);
+	while ((((philo->monitor->tv.tv_sec * 1000) + (philo->monitor->tv.tv_usec / 1000)) - philo->monitor->time_to_die) != philo->last_meal)
+	{
+		gettimeofday(&philo->monitor->tv, NULL);
+		philo->forks_handled[0] = philo->fork_id;
+		philo->forks_handled[1] = philo->next->fork_id;
+		printf("salut je suis le philo %d et j'ai la fourchette %d et la fourchette %d\n", philo->fork_id, philo->forks_handled[0], philo->forks_handled[1]);
+		printf("et l'heure actuelle est : %ld\n", (philo->monitor->tv.tv_sec * 1000) + (philo->monitor->tv.tv_usec / 1000));
+		usleep(500);
+	}
+	pthread_mutex_unlock(&philo->monitor->forks);
 	pthread_mutex_unlock(&philo->monitor->writing);
 	return (NULL);
-
-}
-
-void	init_thread(t_philo **philo)
-{
-	t_philo	*current;
-
-	current = *philo;
-	// printf("\n-------------------------------------\ninit_thread\n-------------------------------------\n\n");
-	// printf("philo->monitor adrs                : %p\n\n", (*philo)->monitor);
-	//pthread_mutex_lock(&(*philo)->monitor->start);
-	while (current->next != NULL && current->next != *philo)
-	{
-		// printf("current->fork_id : %d / ", current->fork_id);
-		// printf("current->monitor->writing adrs : %p / ", &current->monitor->writing);
-		// printf("current->monitor adrs : %p\n\n", current->monitor);
-		pthread_create(&current->thread, NULL, philo_routine,
-			current);
-		pthread_join(current->thread, NULL);
-		current = current->next;
-	}
-	// printf("current->fork_id : %d / ", current->fork_id);
-	// printf("current->monitor->writing adrs : %p / ", &current->monitor->writing);
-	// printf("current->monitor adrs : %p\n\n", current->monitor);
-	pthread_create(&current->thread, NULL, philo_routine, current);
-	pthread_join(current->thread, NULL);
-	//pthread_mutex_unlock(&(*philo)->monitor->start);
-
 }
 
 int	main(int argc, char **argv)
@@ -68,6 +67,5 @@ int	main(int argc, char **argv)
 	monitor->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		monitor->meals = ft_atoi(argv[5]);
-	init_philo(&monitor, &philo);
-	usleep(50000);
+	ft_initialisation(&monitor, &philo);
 }
