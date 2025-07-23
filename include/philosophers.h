@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/07/17 19:09:37 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/23 18:52:44 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ typedef struct s_monitor
 	int						philo_count;
 	bool					all_full;
 	pthread_mutex_t			writing;
+	pthread_mutex_t			start;
 }							t_monitor;
 
 typedef struct s_philo
 {
 	pthread_t				thread;
-	t_monitor				monitor;
+	t_monitor				*monitor;
 	int						fork_id;
 	int						starving;
 	bool					alive;
@@ -56,7 +57,7 @@ void						*ft_calloc(size_t nitems, size_t size);
 void						*ft_memset(void *str, int c, size_t n);
 
 // init_philo.c
-int							init_philo(t_monitor *monitor, t_philo *philo);
+int							init_philo(t_monitor **monitor, t_philo **philo);
 t_philo						*create_philo(int i);
 void						add_philo_back(t_philo **philo, t_philo *new);
 void						init_thread(t_philo **philo);
