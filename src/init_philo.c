@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:31:18 by egache            #+#    #+#             */
-/*   Updated: 2025/07/23 23:15:10 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/24 21:33:14 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_philo	*create_philo(int i)
 	if (!new)
 		return (NULL);
 	new->fork_id = i + 1;
-	new->alive = true;
 	new->full = false;
+	new->has_forks = false;
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/07/23 23:10:33 by egache           ###   ########.fr        #
+#    Updated: 2025/07/24 21:36:23 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ tfbil.c	\
 initialisation.c \
 debug.c	\
 init_philo.c \
+philo_routine.c \
+monitoring.c \
 
 SRC		:=	$(SRC:%=$(SRC_DIR)/%)
 

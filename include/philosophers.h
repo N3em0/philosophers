@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/07/23 23:52:45 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/24 21:35:10 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ typedef struct s_monitor
 	int						philo_count;
 	long					set_time;
 	bool					all_full;
+	bool					alive;
 	pthread_mutex_t			writing;
 	pthread_mutex_t			start;
-	pthread_mutex_t			forks;
+	pthread_mutex_t			own_fork;
+	pthread_mutex_t			other_fork;
 	pthread_mutex_t			last_meal;
 }							t_monitor;
 
@@ -45,8 +47,8 @@ typedef struct s_philo
 	t_monitor				*monitor;
 	int						fork_id;
 	long					last_meal;
-	bool					alive;
 	int						forks_handled[2];
+	bool					has_forks;
 	bool					full;
 	struct s_philo			*next;
 }							t_philo;
@@ -60,6 +62,19 @@ int							ft_initialisation(t_monitor **monitor,
 int							init_philo(t_monitor **monitor, t_philo **philo);
 int							init_mutex(t_monitor *monitor);
 int							init_thread(t_philo **philo);
+
+// philo_routine.c
+int							philo_forks(t_philo *philo, t_monitor *monitor);
+int							philo_eating(t_philo *philo, t_monitor *monitor);
+int							philo_sleeping(t_philo *philo, t_monitor *monitor);
+int							philo_thinking(t_philo *philo, t_monitor *monitor);
+
+// timetime.c
+int							time_to_x(t_monitor *monitor, int x);
+long						timetime(t_monitor *monitor);
+
+// monitoring.c
+bool						is_alive(t_philo *philo, t_monitor *monitor);
 
 // tfbil.c
 int							ft_atoi(const char *str);
