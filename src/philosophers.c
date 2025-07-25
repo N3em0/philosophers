@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/07/24 21:37:02 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/25 01:25:02 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ long	timetime(t_monitor *monitor)
 	return (set_time);
 }
 
-int	time_to_x(t_monitor *monitor, int x)
+long	time_to_x(t_monitor *monitor, int x)
 {
-	timetime(monitor);
+	gettimeofday(&monitor->tv, NULL);
 	return ((monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000) - x);
 }
 
@@ -41,12 +41,18 @@ void	*philo_routine(void *arg)
 	pthread_mutex_lock(&philo->monitor->last_meal);
 	philo->last_meal = timetime(philo->monitor);
 	pthread_mutex_unlock(&philo->monitor->last_meal);
-	while (is_alive(philo, philo->monitor) == true)
+	while (1)
 	{
-		philo_forks(philo, philo->monitor);
-		philo_eating(philo, philo->monitor);
-		philo_sleeping(philo, philo->monitor);
-		philo_thinking(philo, philo->monitor);
+		if (is_alive(philo, philo->monitor) == false)
+			exit(0);
+		if (philo_forks(philo, philo->monitor) == 0)
+		{
+			philo_eating(philo, philo->monitor);
+			philo_sleeping(philo, philo->monitor);
+			philo_thinking(philo, philo->monitor);
+		}
+		else
+			continue ;
 	}
 	return (NULL);
 }

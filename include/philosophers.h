@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/07/24 21:35:10 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/25 00:38:12 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int							philo_sleeping(t_philo *philo, t_monitor *monitor);
 int							philo_thinking(t_philo *philo, t_monitor *monitor);
 
 // timetime.c
-int							time_to_x(t_monitor *monitor, int x);
+long						time_to_x(t_monitor *monitor, int x);
 long						timetime(t_monitor *monitor);
 
 // monitoring.c
