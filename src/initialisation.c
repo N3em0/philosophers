@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/07/24 21:34:00 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/30 00:44:36 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,20 @@ int	init_philo(t_monitor **monitor, t_philo **philo)
 
 int	init_mutex(t_monitor *monitor)
 {
+	int	i;
+
+	i = 0;
 	pthread_mutex_init(&monitor->writing, NULL);
 	pthread_mutex_init(&monitor->start, NULL);
-	pthread_mutex_init(&monitor->own_fork, NULL);
-	pthread_mutex_init(&monitor->other_fork, NULL);
+	printf("philo_count : %d\n", monitor->philo_count);
+	monitor->forks = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
+	while (i < monitor->philo_count)
+	{
+		pthread_mutex_init(&monitor->forks[i], NULL);
+		i++;
+	}
+	// pthread_mutex_init(&monitor->own_fork, NULL);
+	// pthread_mutex_init(&monitor->other_fork, NULL);
 	pthread_mutex_init(&monitor->last_meal, NULL);
 	return (0);
 }

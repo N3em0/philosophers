@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/07/25 00:38:12 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/30 00:28:22 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ typedef struct s_monitor
 	bool					alive;
 	pthread_mutex_t			writing;
 	pthread_mutex_t			start;
-	pthread_mutex_t			own_fork;
-	pthread_mutex_t			other_fork;
+	pthread_mutex_t			*forks;
 	pthread_mutex_t			last_meal;
 }							t_monitor;
 

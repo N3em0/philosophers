@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/07/25 01:25:02 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/30 01:01:00 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,45 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&philo->monitor->last_meal);
 	while (1)
 	{
-		if (is_alive(philo, philo->monitor) == false)
-			exit(0);
-		if (philo_forks(philo, philo->monitor) == 0)
+		if (is_alive(philo, philo->monitor) == true)
 		{
-			philo_eating(philo, philo->monitor);
-			philo_sleeping(philo, philo->monitor);
-			philo_thinking(philo, philo->monitor);
+			if (philo_forks(philo, philo->monitor) == 0)
+			{
+				if (is_alive(philo, philo->monitor) == true)
+					philo_eating(philo, philo->monitor);
+				if (is_alive(philo, philo->monitor) == true)
+					philo_sleeping(philo, philo->monitor);
+				if (is_alive(philo, philo->monitor) == true)
+					philo_thinking(philo, philo->monitor);
+				if (is_alive(philo, philo->monitor) == false)
+				{
+					printf("oui je suis mort ouin ouin, philo [%d]\n", philo->fork_id);
+					exit(0);
+				}
+			}
+			else
+				continue ;
 		}
-		else
-			continue ;
 	}
 	return (NULL);
+}
+
+int	main(int argc, char **argv)
+{
+	t_philo		*philo;
+	t_monitor	*monitor;
+
+	philo = NULL;
+	monitor = ft_calloc(1, sizeof(t_monitor));
+	if (argc < 5 || argc > 6)
+		return (1);
+	monitor->philo_count = ft_atoi(argv[1]);
+	monitor->time_to_die = ft_atoi(argv[2]);
+	monitor->time_to_eat = ft_atoi(argv[3]);
+	monitor->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		monitor->meals = ft_atoi(argv[5]);
+	ft_initialisation(&monitor, &philo);
 }
 
 // void	*philo_routine(void *arg)
@@ -86,21 +113,3 @@ void	*philo_routine(void *arg)
 // 	}
 // 	return (NULL);
 // }
-
-int	main(int argc, char **argv)
-{
-	t_philo		*philo;
-	t_monitor	*monitor;
-
-	philo = NULL;
-	monitor = ft_calloc(1, sizeof(t_monitor));
-	if (argc < 5 || argc > 6)
-		return (1);
-	monitor->philo_count = ft_atoi(argv[1]);
-	monitor->time_to_die = ft_atoi(argv[2]);
-	monitor->time_to_eat = ft_atoi(argv[3]);
-	monitor->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		monitor->meals = ft_atoi(argv[5]);
-	ft_initialisation(&monitor, &philo);
-}
