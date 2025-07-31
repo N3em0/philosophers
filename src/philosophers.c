@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/07/30 01:01:00 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/31 02:16:14 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)(arg);
+	pthread_mutex_lock(&philo->monitor->start);
+	pthread_mutex_unlock(&philo->monitor->start);
 	pthread_mutex_lock(&philo->monitor->last_meal);
 	philo->last_meal = timetime(philo->monitor);
 	pthread_mutex_unlock(&philo->monitor->last_meal);
@@ -47,20 +49,12 @@ void	*philo_routine(void *arg)
 		{
 			if (philo_forks(philo, philo->monitor) == 0)
 			{
-				if (is_alive(philo, philo->monitor) == true)
-					philo_eating(philo, philo->monitor);
-				if (is_alive(philo, philo->monitor) == true)
-					philo_sleeping(philo, philo->monitor);
-				if (is_alive(philo, philo->monitor) == true)
-					philo_thinking(philo, philo->monitor);
-				if (is_alive(philo, philo->monitor) == false)
-				{
-					printf("oui je suis mort ouin ouin, philo [%d]\n", philo->fork_id);
-					exit(0);
-				}
+				philo_eating(philo, philo->monitor);
+				philo_sleeping(philo, philo->monitor);
+				philo_thinking(philo, philo->monitor);
 			}
 			else
-				continue ;
+				return (NULL);
 		}
 	}
 	return (NULL);
@@ -79,6 +73,7 @@ int	main(int argc, char **argv)
 	monitor->time_to_die = ft_atoi(argv[2]);
 	monitor->time_to_eat = ft_atoi(argv[3]);
 	monitor->time_to_sleep = ft_atoi(argv[4]);
+	monitor->start_time = timetime(monitor);
 	if (argc == 6)
 		monitor->meals = ft_atoi(argv[5]);
 	ft_initialisation(&monitor, &philo);

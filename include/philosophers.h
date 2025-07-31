@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/07/30 00:28:22 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/31 01:54:24 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ typedef struct s_monitor
 	int						meals;
 	int						philo_count;
 	long					set_time;
+	long					start_time;
 	bool					all_full;
 	bool					alive;
 	pthread_mutex_t			writing;
 	pthread_mutex_t			start;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			last_meal;
+	pthread_mutex_t			death_check;
 }							t_monitor;
 
 typedef struct s_philo
@@ -45,6 +47,8 @@ typedef struct s_philo
 	pthread_t				thread;
 	t_monitor				*monitor;
 	int						fork_id;
+	int						l_fork;
+	int						r_fork;
 	long					last_meal;
 	int						forks_handled[2];
 	bool					has_forks;
@@ -73,6 +77,7 @@ long						time_to_x(t_monitor *monitor, int x);
 long						timetime(t_monitor *monitor);
 
 // monitoring.c
+int							monitoring(t_philo **philo, t_monitor *monitor);
 bool						is_alive(t_philo *philo, t_monitor *monitor);
 
 // tfbil.c

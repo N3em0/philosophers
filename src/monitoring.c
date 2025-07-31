@@ -6,27 +6,55 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:28:53 by egache            #+#    #+#             */
-/*   Updated: 2025/07/30 01:18:28 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/31 02:35:43 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// bool is_alive(t_philo *philo, t_monitor *monitor)
-// {
-// 	pthread_mutex_lock(&philo->monitor->last_meal);
-// 	if (time_to_x(monitor, monitor->time_to_die) > philo->last_meal)
-// 	{
-// 		monitor->alive = false;
-// 		pthread_mutex_lock(&philo->monitor->writing);
-// 		printf("(%ld) | philo [%d] has died and last meal was %ld\n", timetime(monitor),
-// 		philo->fork_id, philo->last_meal);
-// 		pthread_mutex_unlock(&philo->monitor->writing);
-// 		exit(0);
-// 	}
-// 	pthread_mutex_unlock(&philo->monitor->last_meal);
-// 	return (monitor->alive);
-// }
+int	monitoring(t_philo **philo, t_monitor *monitor)
+{
+	t_philo *current;
+
+	current = *philo;
+	while (1)
+	{
+		//printf("monitoring...\n");
+		if (is_alive(current, monitor) == false)
+		{
+			printf("t mort\n");
+			return (1);
+		}
+		// if (is_full(current, monitor) == true)
+		// 	return (1);
+		pthread_mutex_unlock(&monitor->death_check);
+		current = current->next;
+		usleep(500);
+	}
+}
+
+bool is_alive(t_philo *philo, t_monitor *monitor)
+{
+	// pthread_mutex_lock(&philo->monitor->writing);
+	// printf("time_to_die              = %d\n", monitor->time_to_die);
+	// printf("last meal                = %ld\n", philo->last_meal);
+	// printf("time to x                = %ld\n", time_to_x(monitor, monitor->time_to_die) - monitor->start_time);
+	// pthread_mutex_unlock(&philo->monitor->writing);
+	pthread_mutex_lock(&philo->monitor->last_meal);
+	if (time_to_x(monitor, monitor->time_to_die) > philo->last_meal && monitor->alive == true)
+	{
+		pthread_mutex_lock(&monitor->death_check);
+		monitor->alive = false;
+		pthread_mutex_unlock(&monitor->death_check);
+		pthread_mutex_lock(&philo->monitor->writing);
+		printf("%ld %d has died and last meal was %ld\n", (timetime(monitor) - monitor->start_time),
+		philo->fork_id, (philo->last_meal - monitor->start_time));
+		pthread_mutex_unlock(&philo->monitor->writing);
+		return (false);
+	}
+	pthread_mutex_unlock(&philo->monitor->last_meal);
+	return (true);
+}
 
 /*
 CAN WORK IF LAST_MEAL IS SET UP FOR EVERYTHREAD BEFORE DOIN THIS FUNCTION :
