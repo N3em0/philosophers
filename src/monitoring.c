@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:28:53 by egache            #+#    #+#             */
-/*   Updated: 2025/07/31 02:35:43 by egache           ###   ########.fr       */
+/*   Updated: 2025/07/31 17:17:45 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	monitoring(t_philo **philo, t_monitor *monitor)
 	current = *philo;
 	while (1)
 	{
-		//printf("monitoring...\n");
 		if (is_alive(current, monitor) == false)
 		{
 			printf("t mort\n");
@@ -29,7 +28,7 @@ int	monitoring(t_philo **philo, t_monitor *monitor)
 		// 	return (1);
 		pthread_mutex_unlock(&monitor->death_check);
 		current = current->next;
-		usleep(500);
+		usleep(100);
 	}
 }
 
