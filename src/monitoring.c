@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:28:53 by egache            #+#    #+#             */
-/*   Updated: 2025/08/08 19:25:00 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/08 20:53:48 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	monitoring(t_philo **philo, t_monitor *monitor)
 	current = *philo;
 	while (1)
 	{
+		
 		if (is_alive(current, monitor) == false)
 			return (1);
 		if (is_allfull(&current, monitor) == true)

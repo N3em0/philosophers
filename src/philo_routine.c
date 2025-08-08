@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:27:09 by egache            #+#    #+#             */
-/*   Updated: 2025/08/08 20:36:11 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/08 21:00:57 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ bool	u_sleep(t_philo *philo, t_monitor *monitor, int duration)
 		- Si Duration - elapsed > 100 -> usleep(100)
 		- Si Duration - elapsed > 10 && < 100 -> usleep(10)
 		- Si Duration - elapsed > 1 && < 10 -> usleep(1)
+
+
+		Faire 2 boucles distinctes (if nb_meals or not)
 	*/
 
 	int	elapsed;
@@ -106,17 +109,16 @@ bool	u_sleep(t_philo *philo, t_monitor *monitor, int duration)
 		pthread_mutex_lock(&monitor->is_full);
 		if (monitor->alive == false || monitor->all_full == true)
 		{
-			//printf("allo ?\n");
 			pthread_mutex_unlock(&monitor->is_full);
 			pthread_mutex_unlock(&monitor->death_check);
 			return (false);
 		}
 		pthread_mutex_unlock(&monitor->death_check);
 		pthread_mutex_unlock(&monitor->is_full);
-		usleep(duration / 1000);
+		usleep(duration / 10);
+		elapsed += (duration / 10);
 		//printf("duration : %d\n", duration / 1000);
 		//printf("elapsed : %d\n", elapsed);
-		elapsed += (duration / 1000);
 	}
 	return (true);
 }
@@ -125,7 +127,7 @@ int	philo_eating(t_philo *philo, t_monitor *monitor)
 {
 	if (philo->has_forks)
 	{
-		if (philo_logs(monitor, philo, philo->fork_id, "%ld %d is eating\n") == 1)
+		if (philo_logs(monitor, philo, philo->fork_id, "%ld %d is eating\n"))
 		{
 			pthread_mutex_unlock(&philo->monitor->forks[philo->l_fork - 1]);
 			pthread_mutex_unlock(&philo->monitor->forks[philo->r_fork - 1]);
@@ -149,13 +151,13 @@ int	philo_eating(t_philo *philo, t_monitor *monitor)
 		pthread_mutex_lock(&philo->monitor->last_meal);
 		philo->last_meal = timetime(monitor);
 		pthread_mutex_unlock(&philo->monitor->last_meal);
-		// if (u_sleep(philo, monitor, monitor->time_to_eat * 1000) == false)
-		// {
-		// 	pthread_mutex_unlock(&philo->monitor->forks[philo->l_fork - 1]);
-		// 	pthread_mutex_unlock(&philo->monitor->forks[philo->r_fork - 1]);
-		// 	return (1);
-		// }
-		usleep(monitor->time_to_eat * 1000);
+		if (u_sleep(philo, monitor, monitor->time_to_eat * 1000) == false)
+		{
+			pthread_mutex_unlock(&philo->monitor->forks[philo->l_fork - 1]);
+			pthread_mutex_unlock(&philo->monitor->forks[philo->r_fork - 1]);
+			return (1);
+		}
+		// usleep(monitor->time_to_eat * 1000);
 		philo->has_forks = false;
 		philo->forks_handled[0] = -1;
 		philo->forks_handled[1] = -1;
@@ -171,6 +173,7 @@ int	philo_sleeping(t_philo *philo, t_monitor *monitor)
 		return (1);
 	if (u_sleep(philo, monitor, monitor->time_to_sleep * 1000) == false)
 		return (1);
+	// usleep(monitor->time_to_sleep * 1000);
 	return (0);
 }
 
@@ -178,5 +181,6 @@ int	philo_thinking(t_philo *philo, t_monitor *monitor)
 {
 	if (philo_logs(monitor, philo, philo->fork_id, "%ld %d is thinking\n") == 1)
 		return (1);
+	usleep(10);
 	return (0);
 }
