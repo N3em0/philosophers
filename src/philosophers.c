@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/07/31 02:16:14 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/08 19:11:56 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,14 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&philo->monitor->last_meal);
 	while (1)
 	{
-		if (is_alive(philo, philo->monitor) == true)
-		{
-			if (philo_forks(philo, philo->monitor) == 0)
-			{
-				philo_eating(philo, philo->monitor);
-				philo_sleeping(philo, philo->monitor);
-				philo_thinking(philo, philo->monitor);
-			}
-			else
-				return (NULL);
-		}
+		if (philo_forks(philo, philo->monitor) == 1)
+			break ;
+		if (philo_eating(philo, philo->monitor) == 1)
+			break ;
+		if (philo_sleeping(philo, philo->monitor) == 1)
+			break ;
+		if (philo_thinking(philo, philo->monitor) == 1)
+			break ;
 	}
 	return (NULL);
 }
@@ -74,37 +71,12 @@ int	main(int argc, char **argv)
 	monitor->time_to_eat = ft_atoi(argv[3]);
 	monitor->time_to_sleep = ft_atoi(argv[4]);
 	monitor->start_time = timetime(monitor);
+	monitor->must_do = false;
 	if (argc == 6)
-		monitor->meals = ft_atoi(argv[5]);
+	{
+		monitor->must_do = true;
+		monitor->meals_needed = ft_atoi(argv[5]);
+	}
 	ft_initialisation(&monitor, &philo);
+	return (0);
 }
-
-// void	*philo_routine(void *arg)
-// {
-// 	t_philo	*philo;
-
-// 	philo = (t_philo *)(arg);
-// 	while (1)
-// 	{
-// 		pthread_mutex_lock(&philo->monitor->last_meal);
-// 		philo->last_meal = timetime(philo->monitor);
-// 		printf("last_meal de philo %d : %ld\n", philo->fork_id,
-// 			philo->last_meal);
-// 		pthread_mutex_unlock(&philo->monitor->last_meal);
-// 		pthread_mutex_lock(&philo->monitor->own_fork);
-// 		pthread_mutex_lock(&philo->monitor->other_fork);
-// 		pthread_mutex_lock(&philo->monitor->writing);
-// 		gettimeofday(&philo->monitor->tv, NULL);
-// 		philo->forks_handled[0] = philo->fork_id;
-// 		philo->forks_handled[1] = philo->next->fork_id;
-// 		printf("philo %d fork %d et fork %d\n", philo->fork_id,
-// 			philo->forks_handled[0], philo->forks_handled[1]);
-// 		printf("heure : %ld\n", (philo->monitor->tv.tv_sec * 1000)
-// 			+ (philo->monitor->tv.tv_usec / 1000));
-// 		usleep(50000);
-// 		pthread_mutex_unlock(&philo->monitor->own_fork);
-// 		pthread_mutex_unlock(&philo->monitor->other_fork);
-// 		pthread_mutex_unlock(&philo->monitor->writing);
-// 	}
-// 	return (NULL);
-// }

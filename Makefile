@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/07/24 21:36:23 by egache           ###   ########.fr        #
+#    Updated: 2025/08/08 20:33:15 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ debug.c	\
 init_philo.c \
 philo_routine.c \
 monitoring.c \
+free_exit.c
 
 SRC		:=	$(SRC:%=$(SRC_DIR)/%)
 
@@ -43,7 +44,8 @@ DEP		:=	$(OBJ:%.o=.d)
 #AR	:=	ar -rcs
 
 CC		:=	cc
-CFLAGS	:=	-Wall -Wextra -Werror -g3
+CFLAGS        :=    -Wall -Wextra -Werror -g3
+#CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror -g3
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 # LIBDIR	:=	$(addprefix -L,$(dir $(LIBS_TARGET)))
 # LIBNAME	:=	$(addprefix -l,$(LIBS))
@@ -58,7 +60,7 @@ RMF	:=	rm -rf
 all	:	$(NAME)
 
 $(NAME)	:	$(OBJ) $(LIBS_TARGET) $(HEADER)
-			$(CC) $(LIBDIR) $(OBJ) $(LIBNAME) -o $(NAME)
+			$(CC) $(CFLAGS) $(LIBDIR) $(OBJ) $(LIBNAME) -o $(NAME)
 
 $(LIBS_TARGET)	: FORCE
 			@$(MAKE) -C $(@D)
