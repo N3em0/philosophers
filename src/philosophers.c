@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/08 19:11:56 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:11:47 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,28 @@
 time in arguments are in milliseconds. So 400ms = 400 x 1000
 */
 
-long	timetime(t_monitor *monitor)
+long timetime(t_monitor *monitor)
 {
-	long	set_time;
+	long set_time;
 
+	pthread_mutex_lock(&monitor->time);
 	gettimeofday(&monitor->tv, NULL);
 	set_time = (monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000);
+	pthread_mutex_unlock(&monitor->time);
 	return (set_time);
 }
 
-long	time_to_x(t_monitor *monitor, int x)
+long time_to_x(t_monitor *monitor, int x)
 {
+	pthread_mutex_lock(&monitor->time);
 	gettimeofday(&monitor->tv, NULL);
+	pthread_mutex_unlock(&monitor->time);
 	return ((monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000) - x);
 }
 
-void	*philo_routine(void *arg)
+void *philo_routine(void *arg)
 {
-	t_philo	*philo;
+	t_philo *philo;
 
 	philo = (t_philo *)(arg);
 	pthread_mutex_lock(&philo->monitor->start);
@@ -46,21 +50,21 @@ void	*philo_routine(void *arg)
 	while (1)
 	{
 		if (philo_forks(philo, philo->monitor) == 1)
-			break ;
+			break;
 		if (philo_eating(philo, philo->monitor) == 1)
-			break ;
+			break;
 		if (philo_sleeping(philo, philo->monitor) == 1)
-			break ;
+			break;
 		if (philo_thinking(philo, philo->monitor) == 1)
-			break ;
+			break;
 	}
 	return (NULL);
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_philo		*philo;
-	t_monitor	*monitor;
+	t_philo *philo;
+	t_monitor *monitor;
 
 	philo = NULL;
 	monitor = ft_calloc(1, sizeof(t_monitor));
@@ -70,11 +74,10 @@ int	main(int argc, char **argv)
 	monitor->time_to_die = ft_atoi(argv[2]);
 	monitor->time_to_eat = ft_atoi(argv[3]);
 	monitor->time_to_sleep = ft_atoi(argv[4]);
-	monitor->start_time = timetime(monitor);
-	monitor->must_do = false;
+	monitor->meal_countdown = false;
 	if (argc == 6)
 	{
-		monitor->must_do = true;
+		monitor->meal_countdown = true;
 		monitor->meals_needed = ft_atoi(argv[5]);
 	}
 	ft_initialisation(&monitor, &philo);
