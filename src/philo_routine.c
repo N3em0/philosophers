@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:27:09 by egache            #+#    #+#             */
-/*   Updated: 2025/08/08 21:00:57 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:11:47 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	philo_logs(t_monitor *monitor, t_philo *philo, int philo_id, char *log)
+int philo_logs(t_monitor *monitor, t_philo *philo, int philo_id, char *log)
 {
 	(void)philo;
 	pthread_mutex_lock(&monitor->death_check);
@@ -31,7 +31,7 @@ int	philo_logs(t_monitor *monitor, t_philo *philo, int philo_id, char *log)
 	return (1);
 }
 
-int	philo_forks(t_philo *philo, t_monitor *monitor)
+int philo_forks(t_philo *philo, t_monitor *monitor)
 {
 	philo->l_fork = philo->fork_id;
 	philo->r_fork = philo->next->fork_id;
@@ -88,7 +88,7 @@ int	philo_forks(t_philo *philo, t_monitor *monitor)
 	return (1);
 }
 
-bool	u_sleep(t_philo *philo, t_monitor *monitor, int duration)
+bool u_sleep(t_philo *philo, t_monitor *monitor, int duration)
 {
 	/* FAIRE :
 		- Si Duration - elapsed > 100 -> usleep(100)
@@ -99,7 +99,7 @@ bool	u_sleep(t_philo *philo, t_monitor *monitor, int duration)
 		Faire 2 boucles distinctes (if nb_meals or not)
 	*/
 
-	int	elapsed;
+	int elapsed;
 
 	(void)philo;
 	elapsed = 0;
@@ -117,13 +117,13 @@ bool	u_sleep(t_philo *philo, t_monitor *monitor, int duration)
 		pthread_mutex_unlock(&monitor->is_full);
 		usleep(duration / 10);
 		elapsed += (duration / 10);
-		//printf("duration : %d\n", duration / 1000);
-		//printf("elapsed : %d\n", elapsed);
+		// printf("duration : %d\n", duration / 1000);
+		// printf("elapsed : %d\n", elapsed);
 	}
 	return (true);
 }
 
-int	philo_eating(t_philo *philo, t_monitor *monitor)
+int philo_eating(t_philo *philo, t_monitor *monitor)
 {
 	if (philo->has_forks)
 	{
@@ -134,7 +134,7 @@ int	philo_eating(t_philo *philo, t_monitor *monitor)
 			return (1);
 		}
 		// faire une fonction
-		if (monitor->must_do == true)
+		if (monitor->meal_countdown == true)
 		{
 			pthread_mutex_lock(&philo->monitor->meals_count);
 			if (philo->meals_count < monitor->meals_needed)
@@ -167,7 +167,7 @@ int	philo_eating(t_philo *philo, t_monitor *monitor)
 	return (0);
 }
 
-int	philo_sleeping(t_philo *philo, t_monitor *monitor)
+int philo_sleeping(t_philo *philo, t_monitor *monitor)
 {
 	if (philo_logs(monitor, philo, philo->fork_id, "%ld %d is sleeping\n") == 1)
 		return (1);
@@ -177,7 +177,7 @@ int	philo_sleeping(t_philo *philo, t_monitor *monitor)
 	return (0);
 }
 
-int	philo_thinking(t_philo *philo, t_monitor *monitor)
+int philo_thinking(t_philo *philo, t_monitor *monitor)
 {
 	if (philo_logs(monitor, philo, philo->fork_id, "%ld %d is thinking\n") == 1)
 		return (1);

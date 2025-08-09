@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
+#    By: teatime <teatime@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/08/08 21:10:51 by egache           ###   ########.fr        #
+#    Updated: 2025/08/09 17:09:45 by teatime          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,8 @@ DEP		:=	$(OBJ:%.o=.d)
 #AR	:=	ar -rcs
 
 CC		:=	cc
-#CFLAGS        :=    -Wall -Wextra -Werror -g3
-CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror -g3
+CFLAGS        :=    -Wall -Wextra -Werror -g3 #ENLEVER G3 / ENLEVER G3 / ENLEVER G3 / ENLEVER G3 / ENLEVER G3 / ENLEVER G3
+#CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror -g3
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 # LIBDIR	:=	$(addprefix -L,$(dir $(LIBS_TARGET)))
 # LIBNAME	:=	$(addprefix -l,$(LIBS))

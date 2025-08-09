@@ -3,29 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/08 19:13:34 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:13:03 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_initialisation(t_monitor **monitor, t_philo **philo)
+int ft_initialisation(t_monitor **monitor, t_philo **philo)
 {
 	(*monitor)->alive = true;
 	(*monitor)->all_full = false;
-	init_philo(monitor, philo);
 	init_mutex(*monitor);
+	(*monitor)->start_time = timetime(*monitor);
+	init_philo(monitor, philo);
 	init_thread(philo);
 	return (0);
 }
 
-int	init_philo(t_monitor **monitor, t_philo **philo)
+int init_philo(t_monitor **monitor, t_philo **philo)
 {
-	int		i;
-	t_philo	*new;
+	int i;
+	t_philo *new;
 
 	i = 0;
 	*philo = NULL;
@@ -43,9 +44,9 @@ int	init_philo(t_monitor **monitor, t_philo **philo)
 	return (0);
 }
 
-int	init_mutex(t_monitor *monitor)
+int init_mutex(t_monitor *monitor)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	pthread_mutex_init(&monitor->writing, NULL);
@@ -53,6 +54,7 @@ int	init_mutex(t_monitor *monitor)
 	pthread_mutex_init(&monitor->death_check, NULL);
 	pthread_mutex_init(&monitor->meals_count, NULL);
 	pthread_mutex_init(&monitor->is_full, NULL);
+	pthread_mutex_init(&monitor->time, NULL);
 	printf("philo_count : %d\n", monitor->philo_count);
 	monitor->forks = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
 	while (i < monitor->philo_count)
@@ -64,9 +66,9 @@ int	init_mutex(t_monitor *monitor)
 	return (0);
 }
 
-int	init_thread(t_philo **philo)
+int init_thread(t_philo **philo)
 {
-	t_philo	*current;
+	t_philo *current;
 
 	current = *philo;
 	printf("philo : %p\n", *philo);

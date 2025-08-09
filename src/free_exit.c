@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/08 19:13:51 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/09 16:58:09 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	free_list(t_philo **philo)
+void free_list(t_philo **philo)
 {
-	t_philo	*current;
-	t_philo	*next;
+	t_philo *current;
+	t_philo *next;
 
 	current = *philo;
 	while (current->next != *philo && current->next != NULL)
@@ -26,10 +26,10 @@ void	free_list(t_philo **philo)
 	}
 	free(current);
 	*philo = NULL;
-	return ;
+	return;
 }
 
-void	free_exit(t_philo **philo, t_monitor *monitor, int state)
+void free_exit(t_philo **philo, t_monitor *monitor, int state)
 {
 	destroy_mutex(*philo, monitor);
 	free(monitor->forks);
@@ -39,9 +39,9 @@ void	free_exit(t_philo **philo, t_monitor *monitor, int state)
 	exit(state);
 }
 
-void	destroy_mutex(t_philo *philo, t_monitor *monitor)
+void destroy_mutex(t_philo *philo, t_monitor *monitor)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	(void)philo;
@@ -50,6 +50,7 @@ void	destroy_mutex(t_philo *philo, t_monitor *monitor)
 	pthread_mutex_destroy(&monitor->death_check);
 	pthread_mutex_destroy(&monitor->meals_count);
 	pthread_mutex_destroy(&monitor->is_full);
+	pthread_mutex_destroy(&monitor->time);
 	while (i < monitor->philo_count)
 	{
 		pthread_mutex_destroy(&monitor->forks[i]);
