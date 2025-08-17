@@ -3,14 +3,15 @@ TO DO :
 
 General :
 - Clean free_exit function : Destroy mutex, close thread, protect malloc and possible fail
-- Monitor death between each step to avoid gap between death and stop of program
-
-Time :
-- Define "start_time" variable
-- Lock threads before every threads are created to make them start all together
-- Display timestamp differently
-
-Meals_count :
-- Everything (Mutex / meals_count++ / ...)
 
 and more i guess
+
+
+	/* FAIRE :
+		- Si Duration - elapsed > 100 -> usleep(100)
+		- Si Duration - elapsed > 10 && < 100 -> usleep(10)
+		- Si Duration - elapsed > 1 && < 10 -> usleep(1)
+
+
+		Faire 2 boucles distinctes (if nb_meals or not)
+	*/

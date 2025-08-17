@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/08/09 17:11:47 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/17 22:25:18 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_monitor
 	pthread_mutex_t last_meal;
 	pthread_mutex_t death_check;
 	pthread_mutex_t meals_count;
-	pthread_mutex_t is_full;
+	pthread_mutex_t full_check;
 	pthread_mutex_t time;
 } t_monitor;
 
@@ -88,7 +88,7 @@ long timetime(t_monitor *monitor);
 // monitoring.c
 int monitoring(t_philo **philo, t_monitor *monitor);
 bool is_alive(t_philo *philo, t_monitor *monitor);
-bool is_allfull(t_philo **philo, t_monitor *monitor);
+bool are_all_fulll(t_philo **philo, t_monitor *monitor);
 
 // tfbil.c
 int ft_atoi(const char *str);
@@ -99,7 +99,7 @@ void *ft_memset(void *str, int c, size_t n);
 // free_exit.c
 void free_exit(t_philo **philo, t_monitor *monitor,
 			   int state);
-void destroy_mutex(t_philo *philo, t_monitor *monitor);
+void destroy_mutex(t_monitor *monitor);
 
 // debug.c
 void print_philo(t_philo **philo);
