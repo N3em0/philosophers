@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/09 17:11:47 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/17 23:01:09 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int main(int argc, char **argv)
 		monitor->meal_countdown = true;
 		monitor->meals_needed = ft_atoi(argv[5]);
 	}
+	// if (monitor->philo_count < 0 || monitor->time_to_die < 0 || monitor->time_to_eat < 0 || monitor->time_to_sleep < 0 || monitor->meals_needed < 0)
+	// 	return (0);
 	ft_initialisation(&monitor, &philo);
 	return (0);
 }

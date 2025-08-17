@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/09 17:13:03 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/17 22:25:48 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ int init_mutex(t_monitor *monitor)
 	pthread_mutex_init(&monitor->start, NULL);
 	pthread_mutex_init(&monitor->death_check, NULL);
 	pthread_mutex_init(&monitor->meals_count, NULL);
-	pthread_mutex_init(&monitor->is_full, NULL);
+	pthread_mutex_init(&monitor->full_check, NULL);
 	pthread_mutex_init(&monitor->time, NULL);
 	printf("philo_count : %d\n", monitor->philo_count);
 	monitor->forks = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
+	// protect malloc !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	while (i < monitor->philo_count)
 	{
 		pthread_mutex_init(&monitor->forks[i], NULL);

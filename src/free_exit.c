@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/09 16:58:09 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/17 22:25:48 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void free_list(t_philo **philo)
 
 void free_exit(t_philo **philo, t_monitor *monitor, int state)
 {
-	destroy_mutex(*philo, monitor);
+	destroy_mutex(monitor);
 	free(monitor->forks);
 	free(monitor);
 	monitor = NULL;
@@ -39,17 +39,16 @@ void free_exit(t_philo **philo, t_monitor *monitor, int state)
 	exit(state);
 }
 
-void destroy_mutex(t_philo *philo, t_monitor *monitor)
+void destroy_mutex(t_monitor *monitor)
 {
 	int i;
 
 	i = 0;
-	(void)philo;
 	pthread_mutex_destroy(&monitor->writing);
 	pthread_mutex_destroy(&monitor->start);
 	pthread_mutex_destroy(&monitor->death_check);
 	pthread_mutex_destroy(&monitor->meals_count);
-	pthread_mutex_destroy(&monitor->is_full);
+	pthread_mutex_destroy(&monitor->full_check);
 	pthread_mutex_destroy(&monitor->time);
 	while (i < monitor->philo_count)
 	{
