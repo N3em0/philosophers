@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:28:53 by egache            #+#    #+#             */
-/*   Updated: 2025/08/17 22:25:48 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/18 16:05:56 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int monitoring(t_philo **philo, t_monitor *monitor)
 
         if (is_alive(current, monitor) == false)
             return (1);
-        if (are_all_fulll(&current, monitor) == true)
+        if (are_all_full(&current, monitor) == true)
             return (1);
         current = current->next;
-        usleep(100);
+        usleep(10);
     }
 }
 
-bool are_all_fulll(t_philo **philo, t_monitor *monitor)
+bool are_all_full(t_philo **philo, t_monitor *monitor)
 {
     t_philo *current;
 
