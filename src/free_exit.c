@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/17 22:25:48 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/18 12:13:44 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void destroy_mutex(t_monitor *monitor)
 
 	i = 0;
 	pthread_mutex_destroy(&monitor->writing);
+	pthread_mutex_destroy(&monitor->elapsed);
 	pthread_mutex_destroy(&monitor->start);
 	pthread_mutex_destroy(&monitor->death_check);
 	pthread_mutex_destroy(&monitor->meals_count);

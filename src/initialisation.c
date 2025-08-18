@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/17 22:25:48 by teatime          ###   ########.fr       */
+/*   Updated: 2025/08/18 14:01:50 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int init_mutex(t_monitor *monitor)
 	int i;
 
 	i = 0;
+	pthread_mutex_init(&monitor->elapsed, NULL);
 	pthread_mutex_init(&monitor->writing, NULL);
 	pthread_mutex_init(&monitor->start, NULL);
 	pthread_mutex_init(&monitor->death_check, NULL);
@@ -82,7 +83,7 @@ int init_thread(t_philo **philo)
 	pthread_create(&current->thread, NULL, philo_routine, current);
 	pthread_mutex_unlock(&(*philo)->monitor->start);
 	current = *philo;
-	if (monitoring(philo, (*philo)->monitor) == 1)
+	if (monitoring(philo, (*philo)->monitor) == 1 || (*philo)->monitor->all_full == true)
 	{
 		while (current->next != NULL && current->next != *philo)
 		{
