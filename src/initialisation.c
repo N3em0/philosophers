@@ -6,13 +6,13 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/18 14:01:50 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:50:17 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int ft_initialisation(t_monitor **monitor, t_philo **philo)
+int	ft_initialisation(t_monitor **monitor, t_philo **philo)
 {
 	(*monitor)->alive = true;
 	(*monitor)->all_full = false;
@@ -23,10 +23,10 @@ int ft_initialisation(t_monitor **monitor, t_philo **philo)
 	return (0);
 }
 
-int init_philo(t_monitor **monitor, t_philo **philo)
+int	init_philo(t_monitor **monitor, t_philo **philo)
 {
-	int i;
-	t_philo *new;
+	int		i;
+	t_philo	*new;
 
 	i = 0;
 	*philo = NULL;
@@ -44,9 +44,9 @@ int init_philo(t_monitor **monitor, t_philo **philo)
 	return (0);
 }
 
-int init_mutex(t_monitor *monitor)
+int	init_mutex(t_monitor *monitor)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_init(&monitor->elapsed, NULL);
@@ -68,9 +68,9 @@ int init_mutex(t_monitor *monitor)
 	return (0);
 }
 
-int init_thread(t_philo **philo)
+int	init_thread(t_philo **philo)
 {
-	t_philo *current;
+	t_philo	*current;
 
 	current = *philo;
 	printf("philo : %p\n", *philo);
@@ -83,7 +83,8 @@ int init_thread(t_philo **philo)
 	pthread_create(&current->thread, NULL, philo_routine, current);
 	pthread_mutex_unlock(&(*philo)->monitor->start);
 	current = *philo;
-	if (monitoring(philo, (*philo)->monitor) == 1 || (*philo)->monitor->all_full == true)
+	if (monitoring(philo, (*philo)->monitor) == 1
+		|| (*philo)->monitor->all_full == true)
 	{
 		while (current->next != NULL && current->next != *philo)
 		{

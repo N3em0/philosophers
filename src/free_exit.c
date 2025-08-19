@@ -6,16 +6,16 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/18 12:13:44 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:50:11 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void free_list(t_philo **philo)
+void	free_list(t_philo **philo)
 {
-	t_philo *current;
-	t_philo *next;
+	t_philo	*current;
+	t_philo	*next;
 
 	current = *philo;
 	while (current->next != *philo && current->next != NULL)
@@ -26,10 +26,10 @@ void free_list(t_philo **philo)
 	}
 	free(current);
 	*philo = NULL;
-	return;
+	return ;
 }
 
-void free_exit(t_philo **philo, t_monitor *monitor, int state)
+void	free_exit(t_philo **philo, t_monitor *monitor, int state)
 {
 	destroy_mutex(monitor);
 	free(monitor->forks);
@@ -39,9 +39,9 @@ void free_exit(t_philo **philo, t_monitor *monitor, int state)
 	exit(state);
 }
 
-void destroy_mutex(t_monitor *monitor)
+void	destroy_mutex(t_monitor *monitor)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_destroy(&monitor->writing);

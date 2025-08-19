@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/18 12:34:46 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:50:55 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 time in arguments are in milliseconds. So 400ms = 400 x 1000
 */
 
-long timetime(t_monitor *monitor)
+long	timetime(t_monitor *monitor)
 {
-	long set_time;
+	long	set_time;
 
 	pthread_mutex_lock(&monitor->time);
 	gettimeofday(&monitor->tv, NULL);
@@ -29,7 +29,7 @@ long timetime(t_monitor *monitor)
 	return (set_time);
 }
 
-long time_to_x(t_monitor *monitor, int x)
+long	time_to_x(t_monitor *monitor, int x)
 {
 	pthread_mutex_lock(&monitor->time);
 	gettimeofday(&monitor->tv, NULL);
@@ -37,9 +37,9 @@ long time_to_x(t_monitor *monitor, int x)
 	return ((monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000) - x);
 }
 
-void *philo_routine(void *arg)
+void	*philo_routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)(arg);
 	pthread_mutex_lock(&philo->monitor->start);
@@ -50,21 +50,21 @@ void *philo_routine(void *arg)
 	while (1)
 	{
 		if (philo_forks(philo, philo->monitor) == 1)
-			break;
+			break ;
 		if (philo_eating(philo, philo->monitor) == 1)
-			break;
+			break ;
 		if (philo_sleeping(philo, philo->monitor) == 1)
-			break;
+			break ;
 		if (philo_thinking(philo, philo->monitor) == 1)
-			break;
+			break ;
 	}
 	return (NULL);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_philo *philo;
-	t_monitor *monitor;
+	t_philo		*philo;
+	t_monitor	*monitor;
 
 	philo = NULL;
 	monitor = ft_calloc(1, sizeof(t_monitor));
@@ -80,8 +80,10 @@ int main(int argc, char **argv)
 		monitor->meal_countdown = true;
 		monitor->meals_needed = ft_atoi(argv[5]);
 	}
-	// if (monitor->philo_count < 0 || monitor->time_to_die < 0 || monitor->time_to_eat < 0 || monitor->time_to_sleep < 0 || monitor->meals_needed < 0)
-	// 	return (0);
+	if (monitor->philo_count < 0 || monitor->time_to_die < 0
+		|| monitor->time_to_eat < 0 || monitor->time_to_sleep < 0
+		|| monitor->meals_needed < 0)
+		return (0);
 	ft_initialisation(&monitor, &philo);
 	return (0);
 }
