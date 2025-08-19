@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:27:09 by egache            #+#    #+#             */
-/*   Updated: 2025/08/18 16:05:07 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/19 15:53:59 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	philo_forks(t_philo *philo, t_monitor *monitor)
 		philo->forks_handled[0] = philo->l_fork;
 		if (monitor->alive == true && monitor->all_full == false)
 		{
-			if (philo_logs(philo, monitor, philo->fork_id, "%ld %d has taken a fork\n") == 1)
+			if (philo_logs(philo, monitor, philo->fork_id,
+					"%ld %d has taken a fork\n") == 1)
 			{
 				pthread_mutex_unlock(&philo->monitor->forks[philo->l_fork - 1]);
 				return (1);
@@ -88,7 +89,8 @@ int	philo_forks(t_philo *philo, t_monitor *monitor)
 		philo->has_forks = true;
 		if (monitor->alive == true && monitor->all_full == false)
 		{
-			if (philo_logs(philo, monitor, philo->fork_id, "%ld %d has taken a fork\n") == 1)
+			if (philo_logs(philo, monitor, philo->fork_id,
+					"%ld %d has taken a fork\n") == 1)
 			{
 				pthread_mutex_unlock(&philo->monitor->forks[philo->r_fork - 1]);
 				pthread_mutex_unlock(&philo->monitor->forks[philo->l_fork - 1]);
@@ -144,7 +146,8 @@ int	philo_eating(t_philo *philo, t_monitor *monitor)
 		}
 		if (monitor->alive == true && monitor->all_full == false)
 		{
-			if (philo_logs(philo, monitor, philo->fork_id, "%ld %d is eating\n"))
+			if (philo_logs(philo, monitor, philo->fork_id,
+					"%ld %d is eating\n"))
 			{
 				pthread_mutex_unlock(&philo->monitor->forks[philo->l_fork - 1]);
 				pthread_mutex_unlock(&philo->monitor->forks[philo->r_fork - 1]);
@@ -187,7 +190,8 @@ int	philo_sleeping(t_philo *philo, t_monitor *monitor)
 		return (1);
 	if (monitor->alive == true && monitor->all_full == false)
 	{
-		if (philo_logs(philo, monitor, philo->fork_id, "%ld %d is sleeping\n") == 1)
+		if (philo_logs(philo, monitor, philo->fork_id,
+				"%ld %d is sleeping\n") == 1)
 			return (1);
 	}
 	if (monitor->alive == true && monitor->all_full == false)
@@ -204,7 +208,8 @@ int	philo_thinking(t_philo *philo, t_monitor *monitor)
 		return (1);
 	if (monitor->alive == true && monitor->all_full == false)
 	{
-		if (philo_logs(philo, monitor, philo->fork_id, "%ld %d is thinking\n") == 1)
+		if (philo_logs(philo, monitor, philo->fork_id,
+				"%ld %d is thinking\n") == 1)
 			return (1);
 	}
 	usleep(1);
