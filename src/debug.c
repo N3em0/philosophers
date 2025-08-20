@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:27:40 by egache            #+#    #+#             */
-/*   Updated: 2025/07/23 19:17:12 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/20 18:19:03 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	print_philo(t_philo **philo)
 	}
 }
 
-
 /*
 
-proteger pthread -> SI 1 fail : Je quitte tout / ou je fait avec thread en moins (a moi de decider)
+proteger pthread -> SI 1 fail : Je quitte tout
+	/ ou je fait avec thread en moins (a moi de decider)
 utiliser le meme mutex pour creer thread et start routine
 
 */

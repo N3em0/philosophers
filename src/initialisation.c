@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/19 15:50:17 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/20 16:20:11 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ int	ft_initialisation(t_monitor **monitor, t_philo **philo)
 {
 	(*monitor)->alive = true;
 	(*monitor)->all_full = false;
-	init_mutex(*monitor);
-	(*monitor)->start_time = timetime(*monitor);
-	init_philo(monitor, philo);
-	init_thread(philo);
+	if (init_mutex(*monitor))
+		free_exit(NULL, *monitor, EXIT_FAILURE);
+	(*monitor)->start_time = ft_time(*monitor);
+	if (init_philo(monitor, philo))
+		free_exit(NULL, *monitor, EXIT_FAILURE);
+	if (init_thread(philo))
+		free_exit(philo, *monitor, EXIT_FAILURE);
 	return (0);
 }
 
@@ -49,22 +52,23 @@ int	init_mutex(t_monitor *monitor)
 	int	i;
 
 	i = 0;
+	monitor->forks = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
+	if (!monitor->forks)
+		return (1);
+	pthread_mutex_init(&monitor->start, NULL);
+	pthread_mutex_init(&monitor->time, NULL);
 	pthread_mutex_init(&monitor->elapsed, NULL);
 	pthread_mutex_init(&monitor->writing, NULL);
-	pthread_mutex_init(&monitor->start, NULL);
 	pthread_mutex_init(&monitor->death_check, NULL);
-	pthread_mutex_init(&monitor->meals_count, NULL);
 	pthread_mutex_init(&monitor->full_check, NULL);
-	pthread_mutex_init(&monitor->time, NULL);
+	pthread_mutex_init(&monitor->meals_count, NULL);
+	pthread_mutex_init(&monitor->last_meal, NULL);
 	printf("philo_count : %d\n", monitor->philo_count);
-	monitor->forks = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
-	// protect malloc !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	while (i < monitor->philo_count)
 	{
 		pthread_mutex_init(&monitor->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&monitor->last_meal, NULL);
 	return (0);
 }
 
@@ -77,22 +81,21 @@ int	init_thread(t_philo **philo)
 	pthread_mutex_lock(&(*philo)->monitor->start);
 	while (current->next != NULL && current->next != *philo)
 	{
-		pthread_create(&current->thread, NULL, philo_routine, current);
+		if (pthread_create(&current->thread, NULL, philo_routine, current))
+		{
+			pthread_mutex_unlock(&(*philo)->monitor->start);
+			return (1);
+		}
 		current = current->next;
 	}
-	pthread_create(&current->thread, NULL, philo_routine, current);
+	if (pthread_create(&current->thread, NULL, philo_routine, current))
+	{
+		pthread_mutex_unlock(&(*philo)->monitor->start);
+		return (1);
+	}
 	pthread_mutex_unlock(&(*philo)->monitor->start);
 	current = *philo;
-	if (monitoring(philo, (*philo)->monitor) == 1
-		|| (*philo)->monitor->all_full == true)
-	{
-		while (current->next != NULL && current->next != *philo)
-		{
-			pthread_join(current->thread, NULL);
-			current = current->next;
-		}
-		pthread_join(current->thread, NULL);
-		free_exit(philo, (*philo)->monitor, EXIT_FAILURE);
-	}
+	if (monitoring(philo, (*philo)->monitor) == 1)
+		return (join_thread(philo));
 	return (0);
 }
