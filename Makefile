@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: teatime <teatime@student.42.fr>            +#+  +:+       +#+         #
+#    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/08/09 17:09:45 by teatime          ###   ########.fr        #
+#    Updated: 2025/08/20 18:18:28 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,11 @@ initialisation.c \
 debug.c	\
 init_philo.c \
 philo_routine.c \
+philo_routine_forks.c \
+philo_routine_eating.c \
+philo_routine_utils.c \
 monitoring.c \
+ft_time.c \
 free_exit.c
 
 SRC		:=	$(SRC:%=$(SRC_DIR)/%)

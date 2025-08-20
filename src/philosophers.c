@@ -6,36 +6,11 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/19 15:50:55 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/20 16:33:56 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-/*
-1 millisecond = 1000 microseconds
-
-time in arguments are in milliseconds. So 400ms = 400 x 1000
-*/
-
-long	timetime(t_monitor *monitor)
-{
-	long	set_time;
-
-	pthread_mutex_lock(&monitor->time);
-	gettimeofday(&monitor->tv, NULL);
-	set_time = (monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000);
-	pthread_mutex_unlock(&monitor->time);
-	return (set_time);
-}
-
-long	time_to_x(t_monitor *monitor, int x)
-{
-	pthread_mutex_lock(&monitor->time);
-	gettimeofday(&monitor->tv, NULL);
-	pthread_mutex_unlock(&monitor->time);
-	return ((monitor->tv.tv_sec * 1000) + (monitor->tv.tv_usec / 1000) - x);
-}
 
 void	*philo_routine(void *arg)
 {
@@ -45,7 +20,7 @@ void	*philo_routine(void *arg)
 	pthread_mutex_lock(&philo->monitor->start);
 	pthread_mutex_unlock(&philo->monitor->start);
 	pthread_mutex_lock(&philo->monitor->last_meal);
-	philo->last_meal = timetime(philo->monitor);
+	philo->last_meal = ft_time(philo->monitor);
 	pthread_mutex_unlock(&philo->monitor->last_meal);
 	while (1)
 	{
@@ -68,8 +43,10 @@ int	main(int argc, char **argv)
 
 	philo = NULL;
 	monitor = ft_calloc(1, sizeof(t_monitor));
+	if (!monitor)
+		free_exit(NULL, NULL, EXIT_FAILURE);
 	if (argc < 5 || argc > 6)
-		return (1);
+		free_exit(NULL, NULL, EXIT_FAILURE);
 	monitor->philo_count = ft_atoi(argv[1]);
 	monitor->time_to_die = ft_atoi(argv[2]);
 	monitor->time_to_eat = ft_atoi(argv[3]);
@@ -80,10 +57,10 @@ int	main(int argc, char **argv)
 		monitor->meal_countdown = true;
 		monitor->meals_needed = ft_atoi(argv[5]);
 	}
-	if (monitor->philo_count < 0 || monitor->time_to_die < 0
-		|| monitor->time_to_eat < 0 || monitor->time_to_sleep < 0
-		|| monitor->meals_needed < 0)
-		return (0);
+	if (monitor->philo_count < 0 || monitor->philo_count >= 200
+		|| monitor->time_to_die < 0 || monitor->time_to_eat < 0
+		|| monitor->time_to_sleep < 0 || monitor->meals_needed < 0)
+		free_exit(NULL, monitor, EXIT_FAILURE);
 	ft_initialisation(&monitor, &philo);
-	return (0);
+	free_exit(&philo, monitor, EXIT_SUCCESS);
 }

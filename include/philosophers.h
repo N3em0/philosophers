@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/08/18 14:00:06 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/20 18:24:40 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,30 @@ t_philo						*create_philo(int i);
 void						add_philo_back(t_philo **philo, t_philo *new);
 
 // philo_routine.c
+int							philo_logs(t_monitor *monitor, int philo_id,
+								char *log);
 int							philo_forks(t_philo *philo, t_monitor *monitor);
 int							philo_eating(t_philo *philo, t_monitor *monitor);
 int							philo_sleeping(t_philo *philo, t_monitor *monitor);
 int							philo_thinking(t_philo *philo, t_monitor *monitor);
 
-// timetime.c
+// philo_routine_forks.c
+int							philo_left_fork(t_philo *philo, t_monitor *monitor);
+int							philo_right_fork(t_philo *philo,
+								t_monitor *monitor);
+
+// philo_routine_eating.c
+void						philo_countdown(t_philo *philo, t_monitor *monitor);
+void						philo_update_last_meal(t_philo *philo,
+								t_monitor *monitor);
+
+// philo_routine_utils.c
+bool						philo_is_alive_and_hungry(t_monitor *monitor);
+bool						ft_usleep(t_monitor *monitor, int duration);
+
+// ft_time.c
 long						time_to_x(t_monitor *monitor, int x);
-long						timetime(t_monitor *monitor);
+long						ft_time(t_monitor *monitor);
 
 // monitoring.c
 int							monitoring(t_philo **philo, t_monitor *monitor);
@@ -101,6 +117,7 @@ void						*ft_memset(void *str, int c, size_t n);
 void						free_exit(t_philo **philo, t_monitor *monitor,
 								int state);
 void						destroy_mutex(t_monitor *monitor);
+int							join_thread(t_philo **philo);
 
 // debug.c
 void						print_philo(t_philo **philo);

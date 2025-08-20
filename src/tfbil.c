@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:47:14 by egache            #+#    #+#             */
-/*   Updated: 2025/07/16 17:41:09 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/20 14:37:09 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (result > LLONG_MAX)
+		if (result > INT_MAX)
 			return (ft_overflow(sign));
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
-	if (result > LLONG_MAX)
+	if (result > INT_MAX)
 		return (ft_overflow(sign));
 	return ((int)result * sign);
 }
