@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/20 16:20:11 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/26 18:26:02 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,27 @@ int	ft_initialisation(t_monitor **monitor, t_philo **philo)
 		free_exit(NULL, *monitor, EXIT_FAILURE);
 	if (init_thread(philo))
 		free_exit(philo, *monitor, EXIT_FAILURE);
+	return (0);
+}
+
+int	init_data(t_monitor *monitor, int argc, char **argv)
+{
+	monitor->philo_count = ft_atoi(argv[1]);
+	monitor->time_to_die = ft_atoi(argv[2]);
+	monitor->time_to_eat = ft_atoi(argv[3]);
+	monitor->time_to_sleep = ft_atoi(argv[4]);
+	monitor->meal_countdown = false;
+	if (argc == 6)
+	{
+		monitor->meal_countdown = true;
+		monitor->meals_needed = ft_atoi(argv[5]);
+		if (monitor->meals_needed <= 0)
+			return (1);
+	}
+	if (monitor->philo_count <= 0 || monitor->philo_count > 200
+		|| monitor->time_to_die <= 0 || monitor->time_to_eat <= 0
+		|| monitor->time_to_sleep <= 0)
+		return (1);
 	return (0);
 }
 
@@ -77,7 +98,6 @@ int	init_thread(t_philo **philo)
 	t_philo	*current;
 
 	current = *philo;
-	printf("philo : %p\n", *philo);
 	pthread_mutex_lock(&(*philo)->monitor->start);
 	while (current->next != NULL && current->next != *philo)
 	{

@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/20 16:33:56 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/26 18:09:18 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,17 @@ int	main(int argc, char **argv)
 	t_philo		*philo;
 	t_monitor	*monitor;
 
+	if (argc < 5 || argc > 6)
+		return (1);
 	philo = NULL;
 	monitor = ft_calloc(1, sizeof(t_monitor));
 	if (!monitor)
-		free_exit(NULL, NULL, EXIT_FAILURE);
-	if (argc < 5 || argc > 6)
-		free_exit(NULL, NULL, EXIT_FAILURE);
-	monitor->philo_count = ft_atoi(argv[1]);
-	monitor->time_to_die = ft_atoi(argv[2]);
-	monitor->time_to_eat = ft_atoi(argv[3]);
-	monitor->time_to_sleep = ft_atoi(argv[4]);
-	monitor->meal_countdown = false;
-	if (argc == 6)
+		return (1);
+	if (init_data(monitor, argc, argv))
 	{
-		monitor->meal_countdown = true;
-		monitor->meals_needed = ft_atoi(argv[5]);
+		free(monitor);
+		return (1);
 	}
-	if (monitor->philo_count < 0 || monitor->philo_count >= 200
-		|| monitor->time_to_die < 0 || monitor->time_to_eat < 0
-		|| monitor->time_to_sleep < 0 || monitor->meals_needed < 0)
-		free_exit(NULL, monitor, EXIT_FAILURE);
 	ft_initialisation(&monitor, &philo);
 	free_exit(&philo, monitor, EXIT_SUCCESS);
 }

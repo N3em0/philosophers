@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/08/20 18:24:40 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/26 18:09:55 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void						*philo_routine(void *arg);
 // initialisation.c
 int							ft_initialisation(t_monitor **monitor,
 								t_philo **philo);
+int							init_data(t_monitor *monitor, int argc,
+								char **argv);
 int							init_philo(t_monitor **monitor, t_philo **philo);
 int							init_mutex(t_monitor *monitor);
 int							init_thread(t_philo **philo);
