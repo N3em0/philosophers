@@ -15,3 +15,8 @@ and more i guess
 
 		Faire 2 boucles distinctes (if nb_meals or not)
 	*/
+
+FIN :
+
+- Tout mettre dans un dossier philo
+- Et puis check exit/return / last protection check
