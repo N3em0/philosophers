@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/20 17:11:53 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/26 18:17:35 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	destroy_mutex(t_monitor *monitor)
 {
 	int	i;
 
-	i = 0;
 	pthread_mutex_destroy(&monitor->writing);
 	pthread_mutex_destroy(&monitor->elapsed);
 	pthread_mutex_destroy(&monitor->start);
@@ -59,6 +58,7 @@ void	destroy_mutex(t_monitor *monitor)
 	pthread_mutex_destroy(&monitor->meals_count);
 	pthread_mutex_destroy(&monitor->full_check);
 	pthread_mutex_destroy(&monitor->time);
+	i = 0;
 	while (i < monitor->philo_count)
 	{
 		pthread_mutex_destroy(&monitor->forks[i]);
@@ -79,5 +79,5 @@ void	free_exit(t_philo **philo, t_monitor *monitor, int state)
 	}
 	if (state)
 		printf("Error\n");
-	exit(state);
+	return ;
 }
