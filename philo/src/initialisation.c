@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 14:12:51 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/27 15:59:04 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,16 +107,17 @@ int	init_thread(t_philo **philo)
 			pthread_mutex_unlock(&(*philo)->monitor->start);
 			return (1);
 		}
+		(*philo)->monitor->thread_created++;
 		current = current->next;
 	}
-	// if (pthread_create(&current->thread, NULL, philo_routine, current))
-	// {
+	if (pthread_create(&current->thread, NULL, philo_routine, current))
+	{
 		pthread_mutex_unlock(&(*philo)->monitor->start);
 		return (1);
-	// }
+	}
+	(*philo)->monitor->thread_created++;
 	pthread_mutex_unlock(&(*philo)->monitor->start);
-	current = *philo;
 	if (monitoring(philo, (*philo)->monitor) == 1)
-		return (join_thread(philo));
+		return (0);
 	return (0);
 }

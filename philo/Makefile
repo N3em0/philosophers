@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/08/27 12:20:08 by egache           ###   ########.fr        #
+#    Updated: 2025/08/27 16:03:53 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,8 @@ DEP		:=	$(OBJ:%.o=.d)
 #AR	:=	ar -rcs
 
 CC		:=	cc
-CFLAGS        :=    -Wall -Wextra -Werror -g3 #ENLEVER G3 / ENLEVER G3 / ENLEVER G3 / ENLEVER G3 / ENLEVER G3 / ENLEVER G3
-#CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror -g3
+CFLAGS        :=    -Wall -Wextra -Werror
+#CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 # LIBDIR	:=	$(addprefix -L,$(dir $(LIBS_TARGET)))
 # LIBNAME	:=	$(addprefix -l,$(LIBS))
