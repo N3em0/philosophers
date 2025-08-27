@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 14:06:23 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/27 16:04:10 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)(arg);
 	pthread_mutex_lock(&philo->monitor->start);
 	pthread_mutex_unlock(&philo->monitor->start);
+	pthread_mutex_lock(&philo->monitor->writing);
+	pthread_mutex_unlock(&philo->monitor->writing);
+	if (philo->monitor->thread_created < philo->monitor->philo_count)
+		return (NULL);
 	pthread_mutex_lock(&philo->monitor->last_meal);
 	philo->last_meal = ft_time(philo->monitor);
 	pthread_mutex_unlock(&philo->monitor->last_meal);

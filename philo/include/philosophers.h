@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 14:07:24 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/27 15:45:08 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_monitor
 	int						meals_needed;
 	bool					meal_countdown;
 	int						philo_count;
+	int						thread_created;
 	long					set_time;
 	long					start_time;
 	bool					all_full;

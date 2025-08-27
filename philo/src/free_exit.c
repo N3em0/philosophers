@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 14:08:22 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/27 16:04:56 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 int	join_thread(t_philo **philo)
 {
 	t_philo	*current;
+	int		i;
 
+	i = 1;
 	current = *philo;
-	while (current->next != NULL && current->next != *philo)
+	while (current->next != NULL && current->next != *philo
+		&& i < (*philo)->monitor->thread_created)
 	{
-		if (pthread_join(current->thread, NULL))
-			return (1);
+		pthread_join(current->thread, NULL);
+		i++;
 		current = current->next;
 	}
-	if (pthread_join(current->thread, NULL))
-		return (1);
+	pthread_join(current->thread, NULL);
 	return (0);
 }
 
@@ -72,6 +74,7 @@ void	destroy_mutex(t_monitor *monitor)
 
 void	free_exit(t_philo **philo, t_monitor *monitor, int state)
 {
+	join_thread(philo);
 	destroy_mutex(monitor);
 	free_list(philo);
 	if (monitor)
