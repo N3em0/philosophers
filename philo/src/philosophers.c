@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 16:04:10 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:47:54 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int	main(int argc, char **argv)
 	}
 	if (ft_initialisation(&monitor, &philo))
 	{
-		free_exit(&philo, monitor, EXIT_FAILURE);
+		free_return(&philo, monitor, EXIT_FAILURE);
 		return (1);
 	}
-	free_exit(&philo, monitor, EXIT_SUCCESS);
+	free_return(&philo, monitor, EXIT_SUCCESS);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/08/27 16:03:53 by egache           ###   ########.fr        #
+#    Updated: 2025/08/27 18:47:54 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ philo_routine_eating.c \
 philo_routine_utils.c \
 monitoring.c \
 ft_time.c \
-free_exit.c
+free_return.c
 
 SRC		:=	$(SRC:%=$(SRC_DIR)/%)
 

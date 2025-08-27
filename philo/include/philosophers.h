@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 15:45:08 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:47:54 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ void						ft_bzero(void *s, size_t n);
 void						*ft_calloc(size_t nitems, size_t size);
 void						*ft_memset(void *str, int c, size_t n);
 
-// free_exit.c
-void						free_exit(t_philo **philo, t_monitor *monitor,
+// free_return.c
+void						free_return(t_philo **philo, t_monitor *monitor,
 								int state);
 void						destroy_mutex(t_monitor *monitor);
 int							join_thread(t_philo **philo);
