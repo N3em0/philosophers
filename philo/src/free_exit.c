@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exit.c                                        :+:      :+:    :+:   */
+/*   free_return.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -72,7 +72,7 @@ void	destroy_mutex(t_monitor *monitor)
 	}
 }
 
-void	free_exit(t_philo **philo, t_monitor *monitor, int state)
+void	free_return(t_philo **philo, t_monitor *monitor, int state)
 {
 	join_thread(philo);
 	destroy_mutex(monitor);
