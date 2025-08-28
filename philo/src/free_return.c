@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exit.c                                        :+:      :+:    :+:   */
+/*   free_return.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/28 13:55:34 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/28 14:01:10 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	destroy_mutex(t_monitor *monitor)
 	if (monitor->mutex_are_init == true)
 	{
 		pthread_mutex_destroy(&monitor->writing);
-		pthread_mutex_destroy(&monitor->elapsed);
 		pthread_mutex_destroy(&monitor->start);
 		pthread_mutex_destroy(&monitor->death_check);
 		pthread_mutex_destroy(&monitor->meals_count);

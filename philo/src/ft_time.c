@@ -6,17 +6,11 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:41:39 by egache            #+#    #+#             */
-/*   Updated: 2025/08/20 15:42:15 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/28 14:02:27 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-/*
-1 millisecond = 1000 microseconds
-
-time in arguments are in milliseconds -> 400ms = 400 x 1000
-*/
 
 long	ft_time(t_monitor *monitor)
 {

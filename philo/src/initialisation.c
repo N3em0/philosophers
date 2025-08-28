@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 15:59:04 by egache           ###   ########.fr       */
+/*   Updated: 2025/08/28 14:01:04 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	init_mutex(t_monitor *monitor)
 		return (1);
 	pthread_mutex_init(&monitor->start, NULL);
 	pthread_mutex_init(&monitor->time, NULL);
-	pthread_mutex_init(&monitor->elapsed, NULL);
 	pthread_mutex_init(&monitor->writing, NULL);
 	pthread_mutex_init(&monitor->death_check, NULL);
 	pthread_mutex_init(&monitor->full_check, NULL);
