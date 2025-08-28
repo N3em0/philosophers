@@ -6,16 +6,9 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/08/27 18:47:54 by egache           ###   ########.fr        #
+#    Updated: 2025/08/28 14:07:17 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# LIBS		:=	m
-# LIBS_TARGET	:=			\
-# 	libft/libft.a			\
-# 	mlx_linux/libmlx.a		\
-# 	ft_printf/libprintf.a	\
-# 	get_next_line/libgnl.a	\
 
 HEADER := include/philosophers.h
 
@@ -29,7 +22,6 @@ SRC		:=	\
 philosophers.c	\
 tfbil.c	\
 initialisation.c \
-debug.c	\
 init_philo.c \
 philo_routine.c \
 philo_routine_forks.c \
@@ -45,14 +37,10 @@ BUILD_DIR:=	.build
 OBJ		:=	$(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP		:=	$(OBJ:%.o=.d)
 
-#AR	:=	ar -rcs
-
 CC		:=	cc
 CFLAGS        :=    -Wall -Wextra -Werror
 #CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
-# LIBDIR	:=	$(addprefix -L,$(dir $(LIBS_TARGET)))
-# LIBNAME	:=	$(addprefix -l,$(LIBS))
 
 DIR_DUP	=	mkdir -p $(@D)
 
