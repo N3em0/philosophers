@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:15:47 by egache            #+#    #+#             */
-/*   Updated: 2025/08/20 18:17:42 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/02 00:18:41 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool	philo_is_alive_and_hungry(t_monitor *monitor)
+bool philo_is_alive_and_hungry(t_monitor *monitor)
 {
 	pthread_mutex_lock(&monitor->death_check);
 	pthread_mutex_lock(&monitor->full_check);
@@ -27,18 +27,16 @@ bool	philo_is_alive_and_hungry(t_monitor *monitor)
 	return (false);
 }
 
-bool	ft_usleep(t_monitor *monitor, int duration)
+bool ft_usleep(t_monitor *monitor, int duration)
 {
-	int		elapsed;
-	long	start;
+	long start;
 
-	elapsed = 0;
 	start = ft_time(monitor);
-	while ((ft_time(monitor) - start) < duration / 1000)
+	while ((ft_time(monitor) - start) < duration)
 	{
 		if (philo_is_alive_and_hungry(monitor) == false)
 			return (false);
-		usleep(100);
+		usleep(200);
 	}
 	return (true);
 }
