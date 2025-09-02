@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   free_return.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/09/01 23:15:24 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/02 14:52:34 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int join_thread(t_philo **philo)
+int	join_thread(t_philo **philo)
 {
-	t_philo *current;
-	int i;
+	t_philo	*current;
+	int		i;
 
 	i = 1;
 	current = *philo;
-	while (current->next != NULL && current->next != *philo && i < (*philo)->monitor->thread_created)
+	while (current->next != NULL && current->next != *philo
+		&& i < (*philo)->monitor->thread_created)
 	{
 		pthread_join(current->thread, NULL);
 		i++;
@@ -29,13 +30,13 @@ int join_thread(t_philo **philo)
 	return (0);
 }
 
-static void free_list(t_philo **philo)
+static void	free_list(t_philo **philo)
 {
-	t_philo *current;
-	t_philo *next;
+	t_philo	*current;
+	t_philo	*next;
 
 	if (!*philo)
-		return;
+		return ;
 	current = *philo;
 	while (current->next != *philo && current->next != NULL)
 	{
@@ -45,12 +46,12 @@ static void free_list(t_philo **philo)
 	}
 	free(current);
 	*philo = NULL;
-	return;
+	return ;
 }
 
-void destroy_mutex(t_monitor *monitor)
+void	destroy_mutex(t_monitor *monitor)
 {
-	int i;
+	int	i;
 
 	if (monitor->mutex_are_init == true)
 	{
@@ -71,7 +72,7 @@ void destroy_mutex(t_monitor *monitor)
 	}
 }
 
-void free_return(t_philo **philo, t_monitor *monitor, int state)
+void	free_return(t_philo **philo, t_monitor *monitor, int state)
 {
 	join_thread(philo);
 	destroy_mutex(monitor);
@@ -85,5 +86,5 @@ void free_return(t_philo **philo, t_monitor *monitor, int state)
 	}
 	if (state)
 		printf("Error\n");
-	return;
+	return ;
 }
