@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:42 by egache            #+#    #+#             */
-/*   Updated: 2025/09/01 23:31:01 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/02 20:10:23 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void *philo_routine(void *arg)
+void	*philo_routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)(arg);
 	pthread_mutex_lock(&philo->monitor->start);
@@ -24,24 +24,24 @@ void *philo_routine(void *arg)
 	pthread_mutex_lock(&philo->monitor->last_meal);
 	philo->last_meal = ft_time(philo->monitor);
 	pthread_mutex_unlock(&philo->monitor->last_meal);
-	while (1)
+	while (is_sim_running(philo->monitor))
 	{
 		if (philo_forks(philo, philo->monitor) == 1)
-			break;
+			break ;
 		if (philo_eating(philo, philo->monitor) == 1)
-			break;
+			break ;
 		if (philo_sleeping(philo, philo->monitor) == 1)
-			break;
+			break ;
 		if (philo_thinking(philo, philo->monitor) == 1)
-			break;
+			break ;
 	}
 	return (NULL);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_philo *philo;
-	t_monitor *monitor;
+	t_philo		*philo;
+	t_monitor	*monitor;
 
 	if (argc < 5 || argc > 6)
 		return (1);

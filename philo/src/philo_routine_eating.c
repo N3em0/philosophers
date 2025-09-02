@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:12:04 by egache            #+#    #+#             */
-/*   Updated: 2025/08/27 16:05:05 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/02 20:14:41 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	philo_countdown(t_philo *philo, t_monitor *monitor)
 	if (monitor->meal_countdown == true)
 	{
 		pthread_mutex_lock(&monitor->meals_count);
-		pthread_mutex_lock(&monitor->writing);
-		pthread_mutex_unlock(&monitor->writing);
 		if (philo->meals_count < monitor->meals_needed - 1
 			&& philo->full == false)
 			philo->meals_count++;

@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/09/02 00:31:28 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/02 20:08:01 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int ft_initialisation(t_monitor **monitor, t_philo **philo)
+int	ft_initialisation(t_monitor **monitor, t_philo **philo)
 {
-	(*monitor)->alive = true;
-	(*monitor)->all_full = false;
 	if (init_mutex(*monitor))
 		return (1);
-	(*monitor)->start_time = ft_time(*monitor);
 	if (init_philo(monitor, philo))
 		return (1);
 	if (init_thread(philo))
@@ -26,7 +23,7 @@ int ft_initialisation(t_monitor **monitor, t_philo **philo)
 	return (0);
 }
 
-int init_data(t_monitor *monitor, int argc, char **argv)
+int	init_data(t_monitor *monitor, int argc, char **argv)
 {
 	monitor->philo_count = ft_atoi(argv[1]);
 	monitor->time_to_die = ft_atoi(argv[2]);
@@ -34,6 +31,7 @@ int init_data(t_monitor *monitor, int argc, char **argv)
 	monitor->time_to_sleep = ft_atoi(argv[4]);
 	monitor->meal_countdown = false;
 	monitor->mutex_are_init = false;
+	monitor->sim_running = false;
 	if (argc == 6)
 	{
 		monitor->meal_countdown = true;
@@ -41,7 +39,9 @@ int init_data(t_monitor *monitor, int argc, char **argv)
 		if (monitor->meals_needed <= 0)
 			return (1);
 	}
-	if (monitor->philo_count <= 0 || monitor->philo_count > 200 || monitor->time_to_die <= 0 || monitor->time_to_eat <= 0 || monitor->time_to_sleep <= 0)
+	if (monitor->philo_count <= 0 || monitor->philo_count > 200
+		|| monitor->time_to_die <= 0 || monitor->time_to_eat <= 0
+		|| monitor->time_to_sleep <= 0)
 		return (1);
 	monitor->fork_taken = ft_calloc(1, monitor->philo_count);
 	if (!monitor->fork_taken)
@@ -49,10 +49,10 @@ int init_data(t_monitor *monitor, int argc, char **argv)
 	return (0);
 }
 
-int init_philo(t_monitor **monitor, t_philo **philo)
+int	init_philo(t_monitor **monitor, t_philo **philo)
 {
-	int i;
-	t_philo *new;
+	int		i;
+	t_philo	*new;
 
 	i = 0;
 	*philo = NULL;
@@ -70,15 +70,16 @@ int init_philo(t_monitor **monitor, t_philo **philo)
 	return (0);
 }
 
-int init_mutex(t_monitor *monitor)
+int	init_mutex(t_monitor *monitor)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	monitor->forks = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
 	if (!monitor->forks)
 		return (1);
-	monitor->forks_taken = malloc(monitor->philo_count * sizeof(pthread_mutex_t));
+	monitor->forks_taken = malloc(monitor->philo_count
+			* sizeof(pthread_mutex_t));
 	if (!monitor->forks_taken)
 		return (1);
 	pthread_mutex_init(&monitor->start, NULL);
@@ -98,9 +99,9 @@ int init_mutex(t_monitor *monitor)
 	return (0);
 }
 
-int init_thread(t_philo **philo)
+int	init_thread(t_philo **philo)
 {
-	t_philo *current;
+	t_philo	*current;
 
 	current = *philo;
 	pthread_mutex_lock(&(*philo)->monitor->start);
@@ -120,6 +121,7 @@ int init_thread(t_philo **philo)
 		return (1);
 	}
 	(*philo)->monitor->thread_created++;
+	(*philo)->monitor->sim_running = true;
 	pthread_mutex_unlock(&(*philo)->monitor->start);
 	if (monitoring(philo, (*philo)->monitor) == 1)
 		return (0);
