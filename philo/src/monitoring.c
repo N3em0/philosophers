@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:28:53 by egache            #+#    #+#             */
-/*   Updated: 2025/09/11 17:28:18 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/11 17:42:47 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,45 @@ bool are_all_full(t_philo **philo, t_monitor *monitor)
 
 bool is_alive(t_philo *philo, t_monitor *monitor)
 {
+	long current_time;
+	long time_since_last_meal;
+
 	pthread_mutex_lock(&philo->monitor->last_meal);
-	pthread_mutex_lock(&philo->monitor->writing);
-	if (time_to_x(monitor, monitor->time_to_die) > philo->last_meal)
+	current_time = ft_time(monitor);
+	time_since_last_meal = current_time - philo->last_meal;
+
+	if (time_since_last_meal > monitor->time_to_die)
 	{
 		pthread_mutex_unlock(&philo->monitor->last_meal);
 		pthread_mutex_lock(&philo->monitor->start);
 		philo->monitor->sim_running = false;
 		pthread_mutex_unlock(&philo->monitor->start);
-		printf("%d %d died\n", (ft_time(monitor)),
-			   philo->fork_id);
+
+		pthread_mutex_lock(&philo->monitor->writing);
+		printf("%d %d died\n", (int)current_time, philo->fork_id);
 		pthread_mutex_unlock(&philo->monitor->writing);
 		return (false);
 	}
 	pthread_mutex_unlock(&philo->monitor->last_meal);
-	pthread_mutex_unlock(&philo->monitor->writing);
 	return (true);
 }
+
+// bool is_alive(t_philo *philo, t_monitor *monitor)
+// {
+// 	pthread_mutex_lock(&philo->monitor->last_meal);
+// 	pthread_mutex_lock(&philo->monitor->writing);
+// 	if (time_to_x(monitor, monitor->time_to_die) > philo->last_meal)
+// 	{
+// 		pthread_mutex_unlock(&philo->monitor->last_meal);
+// 		pthread_mutex_lock(&philo->monitor->start);
+// 		philo->monitor->sim_running = false;
+// 		pthread_mutex_unlock(&philo->monitor->start);
+// 		printf("%d %d died\n", (ft_time(monitor)),
+// 			   philo->fork_id);
+// 		pthread_mutex_unlock(&philo->monitor->writing);
+// 		return (false);
+// 	}
+// 	pthread_mutex_unlock(&philo->monitor->last_meal);
+// 	pthread_mutex_unlock(&philo->monitor->writing);
+// 	return (true);
+// }
