@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/09/12 16:39:10 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:56:16 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_monitor
 	pthread_mutex_t			full_check;
 	pthread_mutex_t			time;
 	bool					mutex_are_init;
+	bool					philos_are_init;
 }							t_monitor;
 
 typedef struct s_philo

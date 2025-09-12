@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/09/02 20:08:01 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:58:04 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	init_data(t_monitor *monitor, int argc, char **argv)
 	monitor->time_to_sleep = ft_atoi(argv[4]);
 	monitor->meal_countdown = false;
 	monitor->mutex_are_init = false;
+	monitor->philos_are_init = false;
 	monitor->sim_running = false;
 	if (argc == 6)
 	{
@@ -67,6 +68,7 @@ int	init_philo(t_monitor **monitor, t_philo **philo)
 		add_philo_back(philo, new);
 		i++;
 	}
+	(*monitor)->philos_are_init = true;
 	return (0);
 }
 

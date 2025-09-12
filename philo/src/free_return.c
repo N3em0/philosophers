@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:34 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:57:19 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	free_list(t_philo **philo)
 {
 	t_philo	*current;
 	t_philo	*next;
-
 	if (!*philo)
 		return ;
 	current = *philo;
@@ -74,12 +73,16 @@ void	destroy_mutex(t_monitor *monitor)
 
 void	free_return(t_philo **philo, t_monitor *monitor, int state)
 {
-	join_thread(philo);
+	if (monitor->philos_are_init)
+		join_thread(philo);
 	destroy_mutex(monitor);
 	free_list(philo);
 	if (monitor)
 	{
-		free(monitor->fork_taken);
+		if (monitor->forks_taken)
+			free(monitor->forks_taken);
+		if (monitor->fork_taken)
+			free(monitor->fork_taken);
 		free(monitor->forks);
 		free(monitor);
 		monitor = NULL;
