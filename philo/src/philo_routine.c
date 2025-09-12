@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:27:09 by egache            #+#    #+#             */
-/*   Updated: 2025/09/11 17:31:50 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/12 15:03:42 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int philo_forks(t_philo *philo, t_monitor *monitor)
 		{
 			if (philo_left_fork(philo, monitor))
 				return (1);
-			usleep(300);
 			if (philo_right_fork(philo, monitor))
 				return (1);
 			return (0);

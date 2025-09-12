@@ -6,7 +6,7 @@
 /*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/09/11 16:56:07 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/12 14:59:26 by teatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ bool is_sim_running(t_monitor *monitor);
 bool ft_usleep(t_monitor *monitor, int duration);
 
 // ft_time.c
-long time_to_x(t_monitor *monitor, int x);
 int ft_time(t_monitor *monitor);
 
 // monitoring.c
