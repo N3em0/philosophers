@@ -6,7 +6,7 @@
 #    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/09/12 16:45:09 by egache           ###   ########.fr        #
+#    Updated: 2025/09/12 17:05:14 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ OBJ		:=	$(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP		:=	$(OBJ:%.o=.d)
 
 CC		:=	cc
-CFLAGS        :=    -Wall -Wextra -Werror -O3 -g3
+CFLAGS        :=    -Wall -Wextra -Werror -O3
 #CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 
