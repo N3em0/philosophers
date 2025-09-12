@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   tfbil.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teatime <teatime@student.42.fr>            +#+  +:+       +#+        */
+/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:47:14 by egache            #+#    #+#             */
-/*   Updated: 2025/09/11 16:55:14 by teatime          ###   ########.fr       */
+/*   Updated: 2025/09/12 16:37:29 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int ft_overflow(int sign)
+static int	ft_overflow(int sign)
 {
 	if (sign < 0)
 		return (0);
 	return (-1);
 }
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int i;
-	int sign;
-	long result;
+	int		i;
+	int		sign;
+	long	result;
 
 	i = 0;
 	sign = 1;
@@ -48,14 +48,14 @@ int ft_atoi(const char *str)
 	return ((int)result * sign);
 }
 
-void ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	ft_memset(s, '\0', n);
 }
 
-void *ft_calloc(size_t nitems, size_t size)
+void	*ft_calloc(size_t nitems, size_t size)
 {
-	char *str;
+	char	*str;
 
 	if (size != 0 && nitems > SIZE_MAX / size)
 		return (NULL);
@@ -66,9 +66,9 @@ void *ft_calloc(size_t nitems, size_t size)
 	return (str);
 }
 
-void *ft_memset(void *str, int c, size_t n)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	char *s;
+	char	*s;
 
 	s = (char *)str;
 	while (n > 0)
@@ -77,49 +77,4 @@ void *ft_memset(void *str, int c, size_t n)
 		n--;
 	}
 	return (str);
-}
-
-static int ft_getsize(long nbr)
-{
-	int size;
-
-	size = 1;
-	if (nbr < 0)
-	{
-		nbr = nbr * -1;
-		size++;
-	}
-	while (nbr > 9)
-	{
-		nbr = nbr / 10;
-		size++;
-	}
-	return (size);
-}
-
-char *ft_itoa(int n)
-{
-	char *result;
-	int size;
-	long nbr;
-
-	nbr = n;
-	size = ft_getsize(nbr);
-	result = malloc((size + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	result[size--] = '\0';
-	if (nbr == 0)
-		result[0] = '0';
-	if (nbr < 0)
-	{
-		nbr = nbr * -1;
-		result[0] = '-';
-	}
-	while (nbr)
-	{
-		result[size--] = (nbr % 10) + '0';
-		nbr = nbr / 10;
-	}
-	return (result);
 }
