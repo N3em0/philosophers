@@ -39,7 +39,7 @@ OBJ		:=	$(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP		:=	$(OBJ:%.o=.d)
 
 CC		:=	cc
-CFLAGS        :=    -Wall -Wextra -Werror
+CFLAGS        :=    -Wall -Wextra -Werror -g3
 #CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 

@@ -38,9 +38,9 @@ bool	ft_usleep(t_monitor *monitor, int duration)
 			return (false);
 		elapsed = ft_time(monitor) - start;
 		if (duration - elapsed > 10)
-			sleep_time = 1000;
-		else
 			sleep_time = 100;
+		else
+			sleep_time = 10;
 		usleep(sleep_time);
 	}
 	return (true);

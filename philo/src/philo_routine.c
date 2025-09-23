@@ -16,6 +16,7 @@ int	philo_logs(t_monitor *monitor, int philo_id, char *log)
 {
 	if (is_sim_running(monitor) == true)
 	{
+		
 		pthread_mutex_lock(&monitor->writing);
 		if (is_sim_running(monitor) == true)
 		{
@@ -43,7 +44,7 @@ int	philo_forks(t_philo *philo, t_monitor *monitor)
 				return (1);
 			return (0);
 		}
-		usleep(5);
+		//usleep(5);
 	}
 	return (1);
 }
@@ -94,5 +95,6 @@ int	philo_thinking(t_philo *philo, t_monitor *monitor)
 		return (1);
 	if (!is_sim_running(monitor))
 		return (1);
+	usleep(5);
 	return (0);
 }
