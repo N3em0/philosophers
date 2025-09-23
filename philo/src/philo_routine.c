@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: egache <egache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:27:09 by egache            #+#    #+#             */
-/*   Updated: 2025/09/12 16:34:40 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/23 15:41:52 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	philo_logs(t_monitor *monitor, int philo_id, char *log)
 {
 	if (is_sim_running(monitor) == true)
 	{
-		
 		pthread_mutex_lock(&monitor->writing);
 		if (is_sim_running(monitor) == true)
 		{
@@ -44,7 +43,8 @@ int	philo_forks(t_philo *philo, t_monitor *monitor)
 				return (1);
 			return (0);
 		}
-		//usleep(5);
+		if (RUNNING_ON_VALGRIND)
+			usleep(1);
 	}
 	return (1);
 }

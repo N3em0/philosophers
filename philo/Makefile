@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+         #
+#    By: egache <egache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:51:38 by egache            #+#    #+#              #
-#    Updated: 2025/09/12 18:59:17 by egache           ###   ########.fr        #
+#    Updated: 2025/09/23 15:22:46 by egache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ SRC_DIR	:=	src
 SRC		:=	\
 philosophers.c	\
 tfbil.c	\
-ft_itoa.c \
 initialisation.c \
 init_philo.c \
 philo_routine.c \
@@ -39,7 +38,7 @@ OBJ		:=	$(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP		:=	$(OBJ:%.o=.d)
 
 CC		:=	cc
-CFLAGS        :=    -Wall -Wextra -Werror -g3
+CFLAGS        :=    -Wall -Wextra -Werror
 #CFLAGS        :=    -fsanitize=thread -Wall -Wextra -Werror
 INCLUDE	:=	$(addprefix -I,$(HEAD)) -MMD -MP
 

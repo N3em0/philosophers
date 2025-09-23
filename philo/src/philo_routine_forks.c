@@ -18,16 +18,15 @@ bool	forks_availability(t_philo *philo, t_monitor *monitor)
 
 	ret = false;
 	pthread_mutex_lock(&monitor->forks_taken[philo->l_fork - 1]);
-	if (monitor->fork_taken[philo->l_fork - 1] == false)
-		monitor->fork_taken[philo->l_fork - 1] = true;
-	pthread_mutex_unlock(&monitor->forks_taken[philo->l_fork - 1]);
 	pthread_mutex_lock(&monitor->forks_taken[philo->r_fork - 1]);
-	if (monitor->fork_taken[philo->r_fork - 1] == false)
+	if (monitor->fork_taken[philo->l_fork - 1] == false
+		&& monitor->fork_taken[philo->r_fork - 1] == false)
 	{
+		ret = true;
+		monitor->fork_taken[philo->l_fork - 1] = true;
 		monitor->fork_taken[philo->r_fork - 1] = true;
-		if (monitor->fork_taken[philo->l_fork - 1] == true)
-			ret = true;
 	}
+	pthread_mutex_unlock(&monitor->forks_taken[philo->l_fork - 1]);
 	pthread_mutex_unlock(&monitor->forks_taken[philo->r_fork - 1]);
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: egache <egache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 14:56:15 by egache            #+#    #+#             */
-/*   Updated: 2025/09/12 18:56:16 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/23 15:35:11 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <valgrind/valgrind.h>
 
 typedef struct s_monitor	t_monitor;
 typedef struct s_philo		t_philo;
@@ -118,7 +119,6 @@ int							ft_atoi(const char *str);
 void						ft_bzero(void *s, size_t n);
 void						*ft_calloc(size_t nitems, size_t size);
 void						*ft_memset(void *str, int c, size_t n);
-char						*ft_itoa(int n);
 
 // free_return.c
 void						free_return(t_philo **philo, t_monitor *monitor,

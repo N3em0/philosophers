@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_return.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egache <egache@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: egache <egache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:08:13 by egache            #+#    #+#             */
-/*   Updated: 2025/09/12 18:57:19 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/23 15:43:19 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	free_list(t_philo **philo)
 {
 	t_philo	*current;
 	t_philo	*next;
+
 	if (!*philo)
 		return ;
 	current = *philo;

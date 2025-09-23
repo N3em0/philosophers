@@ -25,7 +25,7 @@ int	monitoring(t_philo **philo, t_monitor *monitor)
 				return (1);
 		}
 		current = current->next;
-		usleep(500);
+		usleep(1000);
 	}
 	return (1);
 }
