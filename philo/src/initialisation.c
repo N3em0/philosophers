@@ -6,7 +6,7 @@
 /*   By: egache <egache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 23:10:13 by egache            #+#    #+#             */
-/*   Updated: 2025/09/23 15:41:42 by egache           ###   ########.fr       */
+/*   Updated: 2025/09/23 16:20:03 by egache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	init_data(t_monitor *monitor, int argc, char **argv)
 			return (1);
 	}
 	if (monitor->philo_count <= 0 || monitor->philo_count > 200
-		|| monitor->time_to_die <= 60 || monitor->time_to_eat <= 60
-		|| monitor->time_to_sleep <= 60)
+		|| monitor->time_to_die < 120 || monitor->time_to_eat < 60
+		|| monitor->time_to_sleep < 60)
 		return (1);
 	monitor->fork_taken = ft_calloc(1, monitor->philo_count);
 	if (!monitor->fork_taken)
